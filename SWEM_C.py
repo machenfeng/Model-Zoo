@@ -1,4 +1,4 @@
-import torch
+中import torch
 import torch.nn as nn
 
 
@@ -21,7 +21,16 @@ class Model(nn.Module):
                                 nn.BatchNorm1d(num_features=hs),
                                 nn.ReLU(),
                                 nn.Linear(hs, nc))
+    @staticmethod
+    def weight_init(m):
+        if isinstance(m, nn.Embedding):
+            nn.init.normal_(m.weight, mean=0, std=0.01)
 
+        elif isinstance(m, nn.Linear):
+            nn.init.xavier_uniform(m.weight)
+            m.bias.data.fill_(0.01)
+
+        return
 
     def avgpool(self, x, mask4div):
         return torch.div(x.sum(1), mask4div)
