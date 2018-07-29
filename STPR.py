@@ -33,6 +33,7 @@ class Model(nn.Module):
                                 nn.BatchNorm1d(num_features=hs), 
                                 nn.ReLU(), 
                                 nn.Linear(hs, 2))
+        
         """ params init """
         for m in self.modules():
             
@@ -40,15 +41,11 @@ class Model(nn.Module):
                 m.weight.data.normal_(0, 0.01)
                 
             if isinstance(m, nn.Parameter):
-                m.data.normal_(0, 0.01)
+                m.data.uniform_(-0.1, 0.1)
                 
             if isinstance(m, nn.Linear):
                 m.weight.data.normal_(0, 0.01)
-                m.bias.data.fill_(0.01)
-            
-            if isinstance(m, nn.Conv2d):
-                m.weight.data.normal_(0, 0.01)
-                m.bias.data.fill_(0.01)          
+                m.bias.data.fill_(0.01)           
 
     def forward(self, x1, x2):
         
