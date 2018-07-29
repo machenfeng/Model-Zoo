@@ -32,20 +32,7 @@ class Model(nn.Module):
         self.fc = nn.Sequential(nn.Linear(2 * oc + 1, hs), 
                                 nn.BatchNorm1d(num_features=hs), 
                                 nn.ReLU(), 
-                                nn.Linear(hs, 2))
-        
-        """ params init """
-        for m in self.modules():
-            
-            if isinstance(m, nn.Embedding):
-                m.weight.data.normal_(0, 0.01)
-                
-            if isinstance(m, nn.Parameter):
-                m.data.uniform_(-0.1, 0.1)
-                
-            if isinstance(m, nn.Linear):
-                m.weight.data.normal_(0, 0.01)
-                m.bias.data.fill_(0.01)           
+                                nn.Linear(hs, 2))      
 
     def forward(self, x1, x2):
         
