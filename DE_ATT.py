@@ -2,12 +2,12 @@ import torch
 from torch import nn
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-class de_att(nn.Module):
+class model(nn.Module):
     
     """ https://arxiv.org/pdf/1606.01933.pdf """
 
     def __init__(self, args):
-        super(de_att, self).__init__()
+        super(model, self).__init__()
         
         ed = args.embed_dim  # encoder dim
         self.nc = args.num_classes
@@ -40,7 +40,7 @@ class de_att(nn.Module):
                  nn.ReLU())
         return fc
 
-    def forward(self, a, b, a_mask, b_mask):
+    def forward(self, a, b):
         
         bs = a.size(0)
         # encode
@@ -88,15 +88,12 @@ class de_att(nn.Module):
         total_loss = 0
         batch_count = len(dataloader)
 
-        for (x1, x2, x1_mask, x2_mask, label) in dataloader:
+        for (x1, x2, _, __, label) in dataloader:
 
-            x1 = x1.to(device)
-            x1_mask = x1_mask.to(device)
-            x2 = x2.to(device)
-            x2_mask = x2_mask.to(device)
+            x1, x2 = x1.to(device), x2.to(device)
             label = label.view(-1).to(device)
 
-            logits = model(x1, x2, x1_mask, x2_mask)
+            logits = model(x1, x2)
             loss = lossfunc(logits, label)
             total_loss += loss.item()
 
