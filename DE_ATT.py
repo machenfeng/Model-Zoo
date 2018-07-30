@@ -2,12 +2,12 @@ import torch
 from torch import nn
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-class Model(nn.Module):
+class de_att(nn.Module):
     
     """ https://arxiv.org/pdf/1606.01933.pdf """
 
     def __init__(self, args):
-        super(Model, self).__init__()
+        super(de_att, self).__init__()
         
         ed = args.embed_dim  # encoder dim
         self.nc = args.num_classes
