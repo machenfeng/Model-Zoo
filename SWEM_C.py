@@ -26,12 +26,24 @@ class Model(nn.Module):
         if isinstance(m, nn.Embedding):
             nn.init.normal_(m.weight, mean=0, std=0.01)
 
+<<<<<<< HEAD
         elif isinstance(m, nn.Linear):
             nn.init.xavier_uniform(m.weight)
             m.bias.data.fill_(0.01)
 
         return
 
+=======
+    @staticmethod
+    def weight_init(m):
+        if isinstance(m, nn.Embedding):
+            nn.init.normal_(m.weight, mean=0, std=0.01)
+
+        elif isinstance(m, nn.Linear):
+            nn.init.xavier_uniform(m.weight)
+            m.bias.data.fill_(0.01)
+            
+>>>>>>> cb85289eacca931de8a0698a46d40472c829b4bf
     def avgpool(self, x, mask4div):
         return torch.div(x.sum(1), mask4div)
 
