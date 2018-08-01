@@ -21,6 +21,16 @@ class Model(nn.Module):
                                 nn.BatchNorm1d(num_features=hs),
                                 nn.ReLU(),
                                 nn.Linear(hs, nc))
+    @staticmethod
+    def weight_init(m):
+        if isinstance(m, nn.Embedding):
+            m.weight.data.normal_(mean=0, std=1)
+
+        elif isinstance(m, nn.Linear):
+            m.weight.data.normal_(mean=0, std=1)
+            m.bias.data.fill_(0.01)
+
+        return
 
     @staticmethod
     def weight_init(m):
