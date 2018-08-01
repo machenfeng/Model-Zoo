@@ -2,14 +2,12 @@ import torch
 import torch.nn as nn
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-class Model(nn.Module):
-    """
-    Short-Text-Pairs-Ranking
-    http://eecs.csuohio.edu/~sschung/CIS660/RankShortTextCNNACM2015.pdf
-    """
+class model(nn.Module):
+
+    """ Short-Text-Pairs-Ranking: http://eecs.csuohio.edu/~sschung/CIS660/RankShortTextCNNACM2015.pdf """
     
     def __init__(self, args):
-        super(Model, self).__init__()
+        super(model, self).__init__()
 
         vs = args.vocab_size
         ed = args.embed_dim
@@ -28,11 +26,12 @@ class Model(nn.Module):
                                   nn.MaxPool2d(kernel_size=(sl - ks + 1 + ps * 2, 1)))
         
         self.m = nn.Parameter(torch.Tensor(oc, oc))
+        self.m.data.uniform_(-0.1, 0.1)
         
         self.fc = nn.Sequential(nn.Linear(2 * oc + 1, hs), 
                                 nn.BatchNorm1d(num_features=hs), 
                                 nn.ReLU(), 
-                                nn.Linear(hs, 2))      
+                                nn.Linear(hs, 2))     
 
     def forward(self, x1, x2):
         
