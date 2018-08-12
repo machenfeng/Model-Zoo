@@ -2,10 +2,10 @@ import torch
 import torch.nn as nn
 
 
-class Model(nn.Module):
+class model(nn.Module):
     
     def __init__(self, args):
-        super(Model, self).__init__()
+        super(model, self).__init__()
 
         oc = args.out_channels
         ks = args.kernel_sizes

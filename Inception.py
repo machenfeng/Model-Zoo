@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 
-class InceptionBlock(nn.Module):
+class inceptionblock(nn.Module):
 
     def __init__(self, args):
         super(InceptionBlock, self).__init__()
@@ -41,10 +41,10 @@ class InceptionBlock(nn.Module):
         return out
 
 
-class Model(nn.Module):
+class model(nn.Module):
 
     def __init__(self, args):
-        super(Model, self).__init__()
+        super(model, self).__init__()
 
         oc = args.out_channels
         vs = args.vocab_size
@@ -55,7 +55,7 @@ class Model(nn.Module):
 
         self.embed = nn.Embedding(vs, ed)
 
-        self.inception_block = InceptionBlock(args)
+        self.inception_block = inceptionblock(args)
 
         self.fc = nn.Sequential(nn.Linear(oc * (sl * 4 - 10), hs),
                                 nn.BatchNorm1d(hs),
